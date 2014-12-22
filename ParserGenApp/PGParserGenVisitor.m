@@ -53,6 +53,8 @@
 #define METHODS @"methods"
 #define METHOD_NAME @"methodName"
 #define METHOD_BODY @"methodBody"
+#define DEFAULT_METHOD_NAME @"defaultMethodName"
+#define DYNAMIC_METHOD_NAME @"dynamicMethodName"
 #define PRE_CALLBACK @"preCallback"
 #define POST_CALLBACK @"postCallback"
 #define TOKEN_KIND @"tokenKind"
@@ -312,9 +314,9 @@
     }
     
     // start method
-    NSString *startTemplate = [self templateStringNamed:@"PGMethodCallTemplate"];
+    NSString *startTemplate = [self templateStringNamed:@"PGDynamicMethodCallTemplate"];
     NSInteger depth = _depth + (_enableAutomaticErrorRecovery ? 1 : 0);
-    NSMutableString *startMethodBodyStr = [NSMutableString stringWithString:[self processTemplate:startTemplate withVariables:@{DEPTH: @(depth), METHOD_NAME: _startMethodName}]];
+    NSMutableString *startMethodBodyStr = [NSMutableString stringWithString:[self processTemplate:startTemplate withVariables:@{DEPTH: @(depth), DEFAULT_METHOD_NAME: _startMethodName, DYNAMIC_METHOD_NAME: @"self.startRuleName"}]];
 
     id eofVars = @{DEPTH: @(depth)};
     NSString *eofCallStr = [self processTemplate:[self templateStringNamed:@"PGEOFCallTemplate"] withVariables:eofVars];

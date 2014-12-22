@@ -1,0 +1,10 @@
+{%for i in 1 to depth %}    {%/for%}NSString * methodName = {{dynamicMethodName}};
+{%for i in 1 to depth %}    {%/for%}if (methodName == nil) {
+{%for i in 1 to depth %}    {%/for%}    [self {{defaultMethodName}}_];
+{%for i in 1 to depth %}    {%/for%}}
+{%for i in 1 to depth %}    {%/for%}else {
+{%for i in 1 to depth %}    {%/for%}    SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+{%for i in 1 to depth %}    {%/for%}    IMP imp = [self methodForSelector:selector];
+{%for i in 1 to depth %}    {%/for%}    void (*func)(id, SEL) = (void *)imp;
+{%for i in 1 to depth %}    {%/for%}    func(self, selector);
+{%for i in 1 to depth %}    {%/for%}}
