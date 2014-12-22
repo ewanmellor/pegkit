@@ -77,6 +77,8 @@
 - (void)addStartMarker:(NSString *)start endMarker:(NSString *)end allowedCharacterSet:(NSCharacterSet *)set {
     NSParameterAssert([start length]);
 
+    end = nil == end ? @"" : end;
+
     // add markers to root node
     [_rootNode add:start];
     if ([end length]) {
@@ -132,8 +134,19 @@
         c = [r read];
         if ('\\' == c) {
             c = [r read];
-            [self append:c];
-            continue;
+            if ('\\' == c) {
+                [self append:c];
+                [self append:c];
+                continue;
+            }
+            NSString *marker = [currRootNode nextSymbol:r startingWith:c];
+            if ([marker length]) {
+                [self append:'\\'];
+                [self append:c];
+                continue;
+            } else {
+                [self append:'\\'];
+            }
         }
         
         if (PKEOF == c) {
