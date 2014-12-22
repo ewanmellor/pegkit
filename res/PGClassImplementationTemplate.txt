@@ -39,6 +39,18 @@
 {%/if%}
 - (void)start {
     PKParser_weakSelfDecl;
+    if (!self.isEmptyOK || [self speculate:^{
+            [PKParser_weakSelf startSpeculate];
+        }]) {
+        [self startSpeculate];
+    }
+    else {
+        PUSH(PEGKitSuccessfulEmptyParse);
+    }
+}
+
+- (void)startSpeculate {
+    PKParser_weakSelfDecl;
 {{beforeAction}}
 {{startMethodBody}}
 {{afterAction}}}
