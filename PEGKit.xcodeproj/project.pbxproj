@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D0466A918E1D9770022A1BC /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D37214CA18DF3B0100525058 /* OCMock.framework */; };
+		4062F0961A47598200C623F5 /* PGDynamicMethodCallTemplate.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4062F0951A47598200C623F5 /* PGDynamicMethodCallTemplate.txt */; };
+		4062F0971A475A6A00C623F5 /* PGDynamicMethodCallTemplate.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4062F0951A47598200C623F5 /* PGDynamicMethodCallTemplate.txt */; };
 		40CA4045198C3E8B0094DF1F /* PGCLI.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CA4044198C3E8B0094DF1F /* PGCLI.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		40CA4048198C54AB0094DF1F /* PGGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CA4047198C54AB0094DF1F /* PGGenerator.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		D306298218E1ED5D00EF745E /* TDTestScaffold.m in Sources */ = {isa = PBXBuildFile; fileRef = D306298118E1ED5D00EF745E /* TDTestScaffold.m */; };
@@ -466,6 +468,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4062F0951A47598200C623F5 /* PGDynamicMethodCallTemplate.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PGDynamicMethodCallTemplate.txt; path = res/PGDynamicMethodCallTemplate.txt; sourceTree = "<group>"; };
 		40CA4044198C3E8B0094DF1F /* PGCLI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCLI.m; sourceTree = "<group>"; };
 		40CA4046198C3F4C0094DF1F /* PGCLI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGCLI.h; sourceTree = "<group>"; };
 		40CA4047198C54AB0094DF1F /* PGGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGGenerator.m; sourceTree = "<group>"; };
@@ -1268,6 +1271,7 @@
 				D30DA1971727410700A1A3EC /* PGTryAndRecoverTemplate.txt */,
 				D30DA19A17274BF100A1A3EC /* PGTryAndRecoverEOFTemplate.txt */,
 				D3B22A37170241F500446945 /* PGMethodCallTemplate.txt */,
+				4062F0951A47598200C623F5 /* PGDynamicMethodCallTemplate.txt */,
 				D30DA1941727059C00A1A3EC /* PGEOFCallTemplate.txt */,
 				D30DA18E1725CBE000A1A3EC /* PGConstantMethodCallTemplate.txt */,
 				D3083ABD1705F73500DA6F95 /* PGMethodSpeculateTemplate.txt */,
@@ -1693,6 +1697,7 @@
 				D3BD39671729D37600FC6549 /* PGPostCallbackSyntaxInteriorTemplate.txt in Resources */,
 				D3BD39691729D37600FC6549 /* PGPreCallbackSyntaxInteriorTemplate.txt in Resources */,
 				D3BD397B1729F2ED00FC6549 /* PGPreCallbackSyntaxLeafTemplate.txt in Resources */,
+				4062F0961A47598200C623F5 /* PGDynamicMethodCallTemplate.txt in Resources */,
 				D3BD397C1729F2F100FC6549 /* PGPostCallbackSyntaxLeafTemplate.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1773,6 +1778,7 @@
 				D338308D171CA3BA00CCE513 /* PGNegationSpeculateTemplate.txt in Resources */,
 				D338308E171CA3BA00CCE513 /* PGNegationPredictTemplate.txt in Resources */,
 				D34795D319423D9F00181E56 /* lines.grammar in Resources */,
+				4062F0971A475A6A00C623F5 /* PGDynamicMethodCallTemplate.txt in Resources */,
 				D33830C8171DBE8A00CCE513 /* named_action.grammar in Resources */,
 				D30DA18F1725CBE000A1A3EC /* PGConstantMethodCallTemplate.txt in Resources */,
 				D30DA1951727059E00A1A3EC /* PGEOFCallTemplate.txt in Resources */,
