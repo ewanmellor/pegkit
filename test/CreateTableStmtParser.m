@@ -45,7 +45,16 @@
 - (void)start {
     PKParser_weakSelfDecl;
 
-    [PKParser_weakSelf createTableStmt_];
+    NSString * methodName = self.startRuleName;
+    if (methodName == nil) {
+        [self createTableStmt_];
+    }
+    else {
+        SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
+    }
     [PKParser_weakSelf matchEOF:YES];
 
 }

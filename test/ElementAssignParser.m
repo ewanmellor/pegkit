@@ -44,7 +44,16 @@
     PKParser_weakSelfDecl;
 
     [self tryAndRecover:TOKEN_KIND_BUILTIN_EOF block:^{
-        [PKParser_weakSelf start_];
+        NSString * methodName = self.startRuleName;
+        if (methodName == nil) {
+            [self start_];
+        }
+        else {
+            SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+            IMP imp = [self methodForSelector:selector];
+            void (*func)(id, SEL) = (void *)imp;
+            func(self, selector);
+        }
         [PKParser_weakSelf matchEOF:YES];
     } completion:^{
         [self matchEOF:YES];

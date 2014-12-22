@@ -69,7 +69,16 @@
 
     }];
 
-    [PKParser_weakSelf sections_];
+    NSString * methodName = self.startRuleName;
+    if (methodName == nil) {
+        [self sections_];
+    }
+    else {
+        SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
+    }
     [PKParser_weakSelf matchEOF:YES];
 
 }
