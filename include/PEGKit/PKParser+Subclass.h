@@ -127,6 +127,7 @@
 #define PUSH_FLOAT(f)  [self pushFloat:(float)(f)]
 #define PUSH_DOUBLE(d) [self pushDouble:(double)(d)]
 #define PUSH_ALL(a)    [self pushAll:(a)]
+#define PUSH_NULL()    PUSH([NSNull null])
 
 #define REV(a) [self reversedArray:a]
 
