@@ -45,6 +45,7 @@
         [self startSpeculate];
     }
     else {
+        [self matchEOF:YES];
         PUSH(PEGKitSuccessfulEmptyParse);
     }
 }
