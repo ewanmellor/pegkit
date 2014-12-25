@@ -891,6 +891,24 @@ NSString * const PEGKitSuccessfulEmptyParse = @"PEGKitSuccessfulEmptyParse";
 }
 
 
+- (NSArray *)popArray {
+    id obj = [_assembly pop];
+    if ([obj isKindOfClass:[NSArray class]]) {
+        return (NSArray *)obj;
+    } else if (obj == [NSNull null]) {
+        return nil;
+    } else {
+        assert(false);
+    }
+}
+
+
+- (NSArray *)popArrayNonEmpty {
+    NSArray * result = [self popArray];
+    return result.count > 0 ? result : nil;
+}
+
+
 - (void)pushBool:(BOOL)yn {
     [_assembly push:(id)(yn ? kCFBooleanTrue : kCFBooleanFalse)];
 }

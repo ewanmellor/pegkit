@@ -79,6 +79,8 @@
 - (PKToken *)popToken;
 - (NSString *)popString;
 - (NSString *)popQuotedString;
+- (NSArray *)popArray;
+- (NSArray *)popArrayNonEmpty;
 
 - (void)pushBool:(BOOL)yn;
 - (void)pushInteger:(NSInteger)i;
@@ -115,6 +117,8 @@
 #define POP_UINT()       [self popUnsignedInteger]
 #define POP_FLOAT()      [self popFloat]
 #define POP_DOUBLE()     [self popDouble]
+#define POP_ARRAY()      [self popArray]
+#define POP_ARRAY_NE()   [self popArrayNonEmpty]
 
 #define PUSH(obj)      [self.assembly push:(id)(obj)]
 #define PUSH_BOOL(yn)  [self pushBool:(BOOL)(yn)]
