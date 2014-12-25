@@ -134,6 +134,7 @@
 #define PUSH_FLOAT(f)  [PKParser_weakSelf pushFloat:(float)(f)]
 #define PUSH_DOUBLE(d) [PKParser_weakSelf pushDouble:(double)(d)]
 #define PUSH_ALL(a)    [PKParser_weakSelf pushAll:(a)]
+#define PUSH_NULL()    PUSH([NSNull null])
 
 #define REV(a) [PKParser_weakSelf reversedArray:a]
 
