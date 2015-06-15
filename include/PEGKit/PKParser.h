@@ -23,6 +23,8 @@
 #import <Foundation/Foundation.h>
 #import <PEGKit/PKTokenizer.h>
 
+@class PKAssembly;
+
 extern NSString * const PEGKitErrorDomain;
 extern NSString * const PEGKitErrorRangeKey;
 extern NSString * const PEGKitErrorLineNumberKey;
@@ -84,4 +86,5 @@ enum {
  */
 @property (nonatomic, assign) BOOL isEmptyOK;
 
+@property (nonatomic, assign) BOOL enableVerboseErrorReporting; // default NO
 @end
