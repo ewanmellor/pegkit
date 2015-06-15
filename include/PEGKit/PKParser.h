@@ -77,13 +77,6 @@ enum {
 @property (nonatomic, assign) BOOL silentlyConsumesWhitespace; // default NO
 @property (nonatomic, assign) BOOL enableActions; // default YES
 @property (nonatomic, assign) BOOL enableAutomaticErrorRecovery; // default NO
-
-/**
- * Set this if you want to accept empty input.
- * The parse* methods will return PEGKitSuccessfulEmptyParse in this case.
- */
-@property (nonatomic, assign) BOOL isEmptyOK;
-
 @property (nonatomic, assign) BOOL enableVerboseErrorReporting; // default NO
 
 /**

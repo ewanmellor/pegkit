@@ -38,6 +38,19 @@
 
 - (void)start {
     PKParser_weakSelfDecl;
+    if (!self.isEmptyOK || [self speculate:^{
+            [PKParser_weakSelf startSpeculate];
+        }]) {
+        [self startSpeculate];
+    }
+    else {
+        [self matchEOF:YES];
+        PUSH(PEGKitSuccessfulEmptyParse);
+    }
+}
+
+- (void)startSpeculate {
+    PKParser_weakSelfDecl;
 
     [self tryAndRecover:TOKEN_KIND_BUILTIN_EOF block:^{
         NSString * methodName = self.startRuleName;

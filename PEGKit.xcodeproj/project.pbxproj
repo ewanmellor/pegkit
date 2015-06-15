@@ -1930,7 +1930,6 @@
 				D376F6DA18D0B3990064C888 /* PGReferenceNode.m in Sources */,
 				40CA4048198C54AB0094DF1F /* PGGenerator.m in Sources */,
 				D366C1AD1A5310F200D69669 /* PGNegationNode.m in Sources */,
-				40CA4048198C54AB0094DF1F /* PGGenerator.m in Sources */,
 				D376F6EE18D0B5190064C888 /* PGBaseVisitor.m in Sources */,
 				D376F6DC18D0B3990064C888 /* PGRootNode.m in Sources */,
 				D376F6C818D0B3990064C888 /* PGCollectionNode.m in Sources */,
