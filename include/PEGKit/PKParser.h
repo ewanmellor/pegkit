@@ -38,8 +38,6 @@ extern NSString * const PEGKitRecognitionPredicateFailed;
  */
 extern NSString * const PEGKitSuccessfulEmptyParse;
 
-@class PKAssembly;
-
 typedef void (^PKSActionBlock)   (void);
 typedef void (^PKSSpeculateBlock)(void);
 typedef BOOL (^PKSPredicateBlock)(void);
@@ -87,4 +85,11 @@ enum {
 @property (nonatomic, assign) BOOL isEmptyOK;
 
 @property (nonatomic, assign) BOOL enableVerboseErrorReporting; // default NO
+
+/**
+ * Set this if you want to accept empty input.
+ * The parse* methods will return PEGKitSuccessfulEmptyParse in this case.
+ */
+@property (nonatomic) BOOL isEmptyOK;
+
 @end
