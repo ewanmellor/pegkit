@@ -41,10 +41,6 @@ NSString * const PEGKitRecognitionTokenMatchFailed = @"Failed to match next inpu
 NSString * const PEGKitRecognitionPredicateFailed = @"Predicate failed";
 NSString * const PEGKitSuccessfulEmptyParse = @"PEGKitSuccessfulEmptyParse";
 
-@interface NSObject ()
-- (void)parser:(PKParser *)p didFailToMatch:(PKAssembly *)a;
-@end
-
 @interface PKAssembly ()
 - (void)consume:(PKToken *)tok;
 @property (nonatomic, readwrite, retain) NSMutableArray *stack;
