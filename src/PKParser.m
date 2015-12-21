@@ -31,7 +31,7 @@
 #import "NSString+PEGKitAdditions.h"
 
 #undef NDEBUG
-#import <assert.h>
+#include <assert.h>
 
 #define FAILED -1
 
