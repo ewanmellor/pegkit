@@ -30,6 +30,9 @@
 #import "NSArray+PEGKitAdditions.h"
 #import "NSString+PEGKitAdditions.h"
 
+#undef NDEBUG
+#include <assert.h>
+
 #define FAILED -1
 
 NSString * const PEGKitErrorDomain = @"PEGKitErrorDomain";
