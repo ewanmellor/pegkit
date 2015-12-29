@@ -39,10 +39,7 @@ NSString * const PEGKitErrorLineNumberKey = @"lineNumber";
 NSInteger PEGKitRecognitionErrorCode = 1;
 NSString * const PEGKitRecognitionTokenMatchFailed = @"Failed to match next input token";
 NSString * const PEGKitRecognitionPredicateFailed = @"Predicate failed";
-
-@interface NSObject ()
-- (void)parser:(PKParser *)p didFailToMatch:(PKAssembly *)a;
-@end
+NSString * const PEGKitSuccessfulEmptyParse = @"PEGKitSuccessfulEmptyParse";
 
 @interface PKAssembly ()
 - (void)consume:(PKToken *)tok;
@@ -310,7 +307,6 @@ NSString * const PEGKitRecognitionPredicateFailed = @"Predicate failed";
         self.tokenSource = nil;
         self.tokenSourceIndex = 0;
         self.tokenSourceCount = 0;
-        self.tokenizer.string = nil;
         self.assembly = nil;
         self.lookahead = nil;
         self.markers = nil;
@@ -399,10 +395,25 @@ NSString * const PEGKitRecognitionPredicateFailed = @"Predicate failed";
 
 
 - (void)fireDelegateSelector:(SEL)sel {
-    if (self.isSpeculating) return;
-    
-    if (_delegate && [_delegate respondsToSelector:sel]) {
+    if (self.isSpeculating || _delegate == nil) return;
+
+    [self fireDelegateMatchRule:sel delegateSelector:@selector(parser:willMatch:)];
+    [self fireDelegateMatchRule:sel delegateSelector:@selector(parser:didMatch:)];
+
+    if ([_delegate respondsToSelector:sel]) {
         [_delegate performSelector:sel withObject:self withObject:_assembly];
+    }
+}
+
+
+- (void)fireDelegateMatchRule:(SEL)sel delegateSelector:(SEL)delegateSelector {
+    NSString * selStr = NSStringFromSelector(sel);
+    NSString * prefix = NSStringFromSelector(delegateSelector);
+    prefix = [prefix substringToIndex:prefix.length - 1];
+
+    if ([selStr hasPrefix:prefix] && [_delegate respondsToSelector:delegateSelector]) {
+        NSString * rule = [selStr substringWithRange:NSMakeRange(prefix.length, selStr.length - prefix.length - 1)];
+        [_delegate performSelector:delegateSelector withObject:self withObject:rule];
     }
 }
 

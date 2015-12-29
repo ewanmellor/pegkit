@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3D0466A918E1D9770022A1BC /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D37214CA18DF3B0100525058 /* OCMock.framework */; };
+		40CA4045198C3E8B0094DF1F /* PGCLI.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CA4044198C3E8B0094DF1F /* PGCLI.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		40CA4048198C54AB0094DF1F /* PGGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 40CA4047198C54AB0094DF1F /* PGGenerator.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		4032A4C01C3115D0005442DD /* PKToken+Subclass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4032A4BF1C3115D0005442DD /* PKToken+Subclass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4032A4C21C312D78005442DD /* PKTokenizerState+Subclass.h in Headers */ = {isa = PBXBuildFile; fileRef = 4032A4C11C312D78005442DD /* PKTokenizerState+Subclass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D306298218E1ED5D00EF745E /* TDTestScaffold.m in Sources */ = {isa = PBXBuildFile; fileRef = D306298118E1ED5D00EF745E /* TDTestScaffold.m */; };
 		D3083AB61705F05C00DA6F95 /* elementsAssign.grammar in Resources */ = {isa = PBXBuildFile; fileRef = D3083AB51705F05C00DA6F95 /* elementsAssign.grammar */; };
 		D3083AB91705F09B00DA6F95 /* ElementAssignParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3083AB81705F09B00DA6F95 /* ElementAssignParserTest.m */; };
@@ -478,6 +482,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		40CA4044198C3E8B0094DF1F /* PGCLI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCLI.m; sourceTree = "<group>"; };
+		40CA4046198C3F4C0094DF1F /* PGCLI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGCLI.h; sourceTree = "<group>"; };
+		40CA4047198C54AB0094DF1F /* PGGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGGenerator.m; sourceTree = "<group>"; };
+		40CA4049198C55100094DF1F /* PGGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGGenerator.h; sourceTree = "<group>"; };
+		4032A4BF1C3115D0005442DD /* PKToken+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PKToken+Subclass.h"; path = "include/PEGKit/PKToken+Subclass.h"; sourceTree = "<group>"; };
+		4032A4C11C312D78005442DD /* PKTokenizerState+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PKTokenizerState+Subclass.h"; path = "include/PEGKit/PKTokenizerState+Subclass.h"; sourceTree = "<group>"; };
 		D302272A17020F9400594F16 /* PGClassImplementationTemplate.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PGClassImplementationTemplate.txt; path = res/PGClassImplementationTemplate.txt; sourceTree = "<group>"; };
 		D306298118E1ED5D00EF745E /* TDTestScaffold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDTestScaffold.m; path = test/TDTestScaffold.m; sourceTree = "<group>"; };
 		D3083AB51705F05C00DA6F95 /* elementsAssign.grammar */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = elementsAssign.grammar; path = res/elementsAssign.grammar; sourceTree = "<group>"; };
@@ -1132,9 +1142,13 @@
 			isa = PBXGroup;
 			children = (
 				D3383049171C923700CCE513 /* PGMainMenu.xib */,
+				40CA4046198C3F4C0094DF1F /* PGCLI.h */,
+				40CA4044198C3E8B0094DF1F /* PGCLI.m */,
 				D3383043171C923700CCE513 /* PGDocument.h */,
 				D3383044171C923700CCE513 /* PGDocument.m */,
 				D3383046171C923700CCE513 /* PGDocument.xib */,
+				40CA4049198C55100094DF1F /* PGGenerator.h */,
+				40CA4047198C54AB0094DF1F /* PGGenerator.m */,
 				D3B22A571703D03F00446945 /* PGTemplates */,
 				D3A1492A16F8C79600770DEE /* visitor */,
 				D325FFBC161E4E3200D4EBCC /* ast */,
@@ -1161,10 +1175,12 @@
 			children = (
 				D3C221C30FFE8C07004514FE /* PKToken.h */,
 				D34BAE950FF9D20900D7773A /* PKToken.m */,
+				4032A4BF1C3115D0005442DD /* PKToken+Subclass.h */,
 				D3C221C90FFE8C15004514FE /* PKTokenizer.h */,
 				D34BAE990FF9D20900D7773A /* PKTokenizer.m */,
 				D3C221CC0FFE8C1B004514FE /* PKTokenizerState.h */,
 				D34BAE9B0FF9D20900D7773A /* PKTokenizerState.m */,
+				4032A4C11C312D78005442DD /* PKTokenizerState+Subclass.h */,
 			);
 			name = tokenizer;
 			sourceTree = SOURCE_ROOT;
@@ -1538,7 +1554,9 @@
 				D3A29E4118E8516F00DC591E /* PKParser+Subclass.h in Headers */,
 				D317C0E418D1F4050036BE75 /* PKMultiLineCommentState.h in Headers */,
 				D317C0E718D1F4050036BE75 /* PKTwitterState.h in Headers */,
+				4032A4C21C312D78005442DD /* PKTokenizerState+Subclass.h in Headers */,
 				D317C0DF18D1F4050036BE75 /* PKWordState.h in Headers */,
+				4032A4C01C3115D0005442DD /* PKToken+Subclass.h in Headers */,
 				D317C0D618D1F4050036BE75 /* PKAssembly.h in Headers */,
 				D317C0E518D1F4050036BE75 /* PKEmailState.h in Headers */,
 				D317C0E818D1F4050036BE75 /* PKHashtagState.h in Headers */,
@@ -1654,7 +1672,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "PEGKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1899,6 +1917,7 @@
 			files = (
 				D376F6E318D0B5090064C888 /* PEGKitParser.m in Sources */,
 				D376F6D018D0B3990064C888 /* PGDelimitedNode.m in Sources */,
+				40CA4045198C3E8B0094DF1F /* PGCLI.m in Sources */,
 				D338303E171C923700CCE513 /* main.m in Sources */,
 				D376F6D418D0B3990064C888 /* PGMultipleNode.m in Sources */,
 				D376F6CC18D0B3990064C888 /* PGConstantNode.m in Sources */,
@@ -1912,6 +1931,7 @@
 				D376F6DF18D0B5020064C888 /* PGParserFactory.m in Sources */,
 				D376F6DA18D0B3990064C888 /* PGReferenceNode.m in Sources */,
 				D366C1AD1A5310F200D69669 /* PGNegationNode.m in Sources */,
+				40CA4048198C54AB0094DF1F /* PGGenerator.m in Sources */,
 				D376F6EE18D0B5190064C888 /* PGBaseVisitor.m in Sources */,
 				D376F6DC18D0B3990064C888 /* PGRootNode.m in Sources */,
 				D376F6C818D0B3990064C888 /* PGCollectionNode.m in Sources */,
@@ -2201,7 +2221,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2234,7 +2256,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/libPEGKitIOS.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2273,7 +2294,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libPEGKitIOS.dst;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2304,7 +2324,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2327,6 +2346,7 @@
 				INFOPLIST_FILE = "ParserGenApp/ParserGenApp-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.parsekit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2343,7 +2363,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2359,6 +2378,7 @@
 				INFOPLIST_FILE = "ParserGenApp/ParserGenApp-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.parsekit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2378,7 +2398,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2413,7 +2432,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -2432,7 +2450,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/lib/OCMock\"",
@@ -2462,6 +2479,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.parseKit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2470,7 +2488,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/lib/OCMock\"",
@@ -2493,6 +2510,7 @@
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.parseKit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2501,7 +2519,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath/";
@@ -2514,6 +2531,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "res/PEGKit-Info.plist";
 				LLVM_LTO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parsekit.PEGKit;
 				PRODUCT_NAME = PEGKit;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
@@ -2538,6 +2556,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = "res/PEGKit-Info.plist";
 				LLVM_LTO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parsekit.PEGKit;
 				PRODUCT_NAME = PEGKit;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;

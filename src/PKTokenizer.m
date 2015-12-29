@@ -21,15 +21,12 @@
 // THE SOFTWARE.
 
 #import <PEGKit/PEGKit.h>
+#import <PEGKit/PKTokenizerState+Subclass.h>
 
 #define STATE_COUNT 256
 
 @interface PKToken ()
 @property (nonatomic, readwrite) NSUInteger lineNumber;
-@end
-
-@interface PKTokenizerState ()
-- (PKTokenizerState *)nextTokenizerStateFor:(PKUniChar)c tokenizer:(PKTokenizer *)t;
 @end
 
 @interface PKTokenizer ()
@@ -145,8 +142,12 @@
 
 
 - (void)dealloc {
-    self.string = nil;
-    self.stream = nil;
+    if (self.string != nil) {
+        self.string = nil;
+    }
+    if (self.stream != nil) {
+        self.stream = nil;
+    }
     self.reader = nil;
     self.tokenizerStates = nil;
     self.numberState = nil;
@@ -271,6 +272,16 @@
     }
     _reader.stream = _stream;
     self.lineNumber = 1;
+}
+
+
+-(void)setIsStreamInUTF8:(BOOL)isStreamInUTF8 {
+    self.reader.isStreamInUTF8 = isStreamInUTF8;
+}
+
+
+-(BOOL)isStreamInUTF8 {
+    return self.reader.isStreamInUTF8;
 }
 
 
