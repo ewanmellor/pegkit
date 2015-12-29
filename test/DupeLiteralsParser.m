@@ -36,6 +36,18 @@
 }
 
 - (void)start {
+    if (!self.isEmptyOK || [self speculate:^{
+            [self startSpeculate];
+        }]) {
+        [self startSpeculate];
+    }
+    else {
+        [self matchEOF:YES];
+        PUSH(PEGKitSuccessfulEmptyParse);
+    }
+}
+
+- (void)startSpeculate {
     [self execute:^{
     
     PKTokenizer *t = self.tokenizer;
@@ -44,7 +56,16 @@
 
     }];
 
-    [self start_]; 
+    NSString * methodName = self.startRuleName;
+    if (methodName == nil) {
+        [self start_];
+    }
+    else {
+        SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
+    }
     [self matchEOF:YES]; 
 
 }

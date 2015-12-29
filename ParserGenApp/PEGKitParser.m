@@ -120,8 +120,29 @@
 }
 
 - (void)start {
+    if (!self.isEmptyOK || [self speculate:^{
+            [self startSpeculate];
+        }]) {
+        [self startSpeculate];
+    }
+    else {
+        [self matchEOF:YES];
+        PUSH(PEGKitSuccessfulEmptyParse);
+    }
+}
 
-    [self start_]; 
+- (void)startSpeculate {
+
+    NSString * methodName = self.startRuleName;
+    if (methodName == nil) {
+        [self start_];
+    }
+    else {
+        SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
+    }
     [self matchEOF:YES]; 
 
 }
@@ -141,25 +162,25 @@
 - (void)grammarAction_ {
     
     [self match:PEGKIT_TOKEN_KIND_AT discard:YES]; 
-    if ([self predicts:PEGKIT_TOKEN_KIND_HKEY, 0]) {
+    if ([self speculate:^{ [self hKey_]; }]) {
         [self hKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_INTERFACEKEY, 0]) {
+    } else if ([self speculate:^{ [self interfaceKey_]; }]) {
         [self interfaceKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_MKEY, 0]) {
+    } else if ([self speculate:^{ [self mKey_]; }]) {
         [self mKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_EXTENSIONKEY, 0]) {
+    } else if ([self speculate:^{ [self extensionKey_]; }]) {
         [self extensionKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_IVARSKEY, 0]) {
+    } else if ([self speculate:^{ [self ivarsKey_]; }]) {
         [self ivarsKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_IMPLEMENTATIONKEY, 0]) {
+    } else if ([self speculate:^{ [self implementationKey_]; }]) {
         [self implementationKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_INITKEY, 0]) {
+    } else if ([self speculate:^{ [self initKey_]; }]) {
         [self initKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_DEALLOCKEY, 0]) {
+    } else if ([self speculate:^{ [self deallocKey_]; }]) {
         [self deallocKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_BEFOREKEY, 0]) {
+    } else if ([self speculate:^{ [self beforeKey_]; }]) {
         [self beforeKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_AFTERKEY, 0]) {
+    } else if ([self speculate:^{ [self afterKey_]; }]) {
         [self afterKey_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'grammarAction'."];
@@ -246,7 +267,7 @@
         [self namedAction_]; 
     }
     [self match:PEGKIT_TOKEN_KIND_EQUALS discard:NO]; 
-    if ([self predicts:PEGKIT_TOKEN_KIND_ACTION, 0]) {
+    if ([self speculate:^{ [self action_]; }]) {
         [self action_]; 
     }
     [self expr_]; 
@@ -265,9 +286,9 @@
 - (void)namedAction_ {
     
     [self match:PEGKIT_TOKEN_KIND_AT discard:YES]; 
-    if ([self predicts:PEGKIT_TOKEN_KIND_BEFOREKEY, 0]) {
+    if ([self speculate:^{ [self beforeKey_]; }]) {
         [self beforeKey_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_AFTERKEY, 0]) {
+    } else if ([self speculate:^{ [self afterKey_]; }]) {
         [self afterKey_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'namedAction'."];
@@ -296,7 +317,7 @@
 
 - (void)term_ {
     
-    if ([self predicts:PEGKIT_TOKEN_KIND_SEMANTICPREDICATE, 0]) {
+    if ([self speculate:^{ [self semanticPredicate_]; }]) {
         [self semanticPredicate_]; 
     }
     [self factor_]; 
@@ -318,18 +339,18 @@
 - (void)factor_ {
     
     [self phrase_]; 
-    if ([self predicts:PEGKIT_TOKEN_KIND_PHRASEPLUS, PEGKIT_TOKEN_KIND_PHRASEQUESTION, PEGKIT_TOKEN_KIND_PHRASESTAR, 0]) {
-        if ([self predicts:PEGKIT_TOKEN_KIND_PHRASESTAR, 0]) {
+    if ([self speculate:^{ if ([self speculate:^{ [self phraseStar_]; }]) {[self phraseStar_]; } else if ([self speculate:^{ [self phrasePlus_]; }]) {[self phrasePlus_]; } else if ([self speculate:^{ [self phraseQuestion_]; }]) {[self phraseQuestion_]; } else {[self raise:@"No viable alternative found in rule 'factor'."];}}]) {
+        if ([self speculate:^{ [self phraseStar_]; }]) {
             [self phraseStar_]; 
-        } else if ([self predicts:PEGKIT_TOKEN_KIND_PHRASEPLUS, 0]) {
+        } else if ([self speculate:^{ [self phrasePlus_]; }]) {
             [self phrasePlus_]; 
-        } else if ([self predicts:PEGKIT_TOKEN_KIND_PHRASEQUESTION, 0]) {
+        } else if ([self speculate:^{ [self phraseQuestion_]; }]) {
             [self phraseQuestion_]; 
         } else {
             [self raise:@"No viable alternative found in rule 'factor'."];
         }
     }
-    if ([self predicts:PEGKIT_TOKEN_KIND_ACTION, 0]) {
+    if ([self speculate:^{ [self action_]; }]) {
         [self action_]; 
     }
 
@@ -390,9 +411,9 @@
 
 - (void)predicate_ {
     
-    if ([self predicts:PEGKIT_TOKEN_KIND_AMPERSAND, 0]) {
+    if ([self speculate:^{ [self intersection_]; }]) {
         [self intersection_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_MINUS, 0]) {
+    } else if ([self speculate:^{ [self difference_]; }]) {
         [self difference_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'predicate'."];
@@ -419,9 +440,9 @@
 
 - (void)primaryExpr_ {
     
-    if ([self predicts:PEGKIT_TOKEN_KIND_TILDE, 0]) {
+    if ([self speculate:^{ [self negatedPrimaryExpr_]; }]) {
         [self negatedPrimaryExpr_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_ANY_TITLE, PEGKIT_TOKEN_KIND_CHAR_TITLE, PEGKIT_TOKEN_KIND_COMMENT_TITLE, PEGKIT_TOKEN_KIND_DELIMOPEN, PEGKIT_TOKEN_KIND_DIGIT_TITLE, PEGKIT_TOKEN_KIND_EMAIL_TITLE, PEGKIT_TOKEN_KIND_EMPTY_TITLE, PEGKIT_TOKEN_KIND_EOF_TITLE, PEGKIT_TOKEN_KIND_LETTER_TITLE, PEGKIT_TOKEN_KIND_NUMBER_TITLE, PEGKIT_TOKEN_KIND_OPEN_BRACKET, PEGKIT_TOKEN_KIND_OPEN_PAREN, PEGKIT_TOKEN_KIND_PATTERNIGNORECASE, PEGKIT_TOKEN_KIND_PATTERNNOOPTS, PEGKIT_TOKEN_KIND_QUOTEDSTRING_TITLE, PEGKIT_TOKEN_KIND_SPECIFICCHAR_TITLE, PEGKIT_TOKEN_KIND_SYMBOL_TITLE, PEGKIT_TOKEN_KIND_S_TITLE, PEGKIT_TOKEN_KIND_URL_TITLE, PEGKIT_TOKEN_KIND_WORD_TITLE, TOKEN_KIND_BUILTIN_QUOTEDSTRING, TOKEN_KIND_BUILTIN_WORD, 0]) {
+    } else if ([self speculate:^{ [self barePrimaryExpr_]; }]) {
         [self barePrimaryExpr_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'primaryExpr'."];
@@ -440,11 +461,11 @@
 
 - (void)barePrimaryExpr_ {
     
-    if ([self predicts:PEGKIT_TOKEN_KIND_ANY_TITLE, PEGKIT_TOKEN_KIND_CHAR_TITLE, PEGKIT_TOKEN_KIND_COMMENT_TITLE, PEGKIT_TOKEN_KIND_DELIMOPEN, PEGKIT_TOKEN_KIND_DIGIT_TITLE, PEGKIT_TOKEN_KIND_EMAIL_TITLE, PEGKIT_TOKEN_KIND_EMPTY_TITLE, PEGKIT_TOKEN_KIND_EOF_TITLE, PEGKIT_TOKEN_KIND_LETTER_TITLE, PEGKIT_TOKEN_KIND_NUMBER_TITLE, PEGKIT_TOKEN_KIND_PATTERNIGNORECASE, PEGKIT_TOKEN_KIND_PATTERNNOOPTS, PEGKIT_TOKEN_KIND_QUOTEDSTRING_TITLE, PEGKIT_TOKEN_KIND_SPECIFICCHAR_TITLE, PEGKIT_TOKEN_KIND_SYMBOL_TITLE, PEGKIT_TOKEN_KIND_S_TITLE, PEGKIT_TOKEN_KIND_URL_TITLE, PEGKIT_TOKEN_KIND_WORD_TITLE, TOKEN_KIND_BUILTIN_QUOTEDSTRING, TOKEN_KIND_BUILTIN_WORD, 0]) {
+    if ([self speculate:^{ [self atomicValue_]; }]) {
         [self atomicValue_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_OPEN_PAREN, 0]) {
+    } else if ([self speculate:^{ [self subSeqExpr_]; }]) {
         [self subSeqExpr_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_OPEN_BRACKET, 0]) {
+    } else if ([self speculate:^{ [self subTrackExpr_]; }]) {
         [self subTrackExpr_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'barePrimaryExpr'."];
@@ -474,7 +495,7 @@
 - (void)atomicValue_ {
     
     [self parser_]; 
-    if ([self predicts:PEGKIT_TOKEN_KIND_DISCARD, 0]) {
+    if ([self speculate:^{ [self discard_]; }]) {
         [self discard_]; 
     }
 
@@ -483,15 +504,15 @@
 
 - (void)parser_ {
     
-    if ([self predicts:TOKEN_KIND_BUILTIN_WORD, 0]) {
+    if ([self speculate:^{ [self variable_]; }]) {
         [self variable_]; 
-    } else if ([self predicts:TOKEN_KIND_BUILTIN_QUOTEDSTRING, 0]) {
+    } else if ([self speculate:^{ [self literal_]; }]) {
         [self literal_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_PATTERNIGNORECASE, PEGKIT_TOKEN_KIND_PATTERNNOOPTS, 0]) {
+    } else if ([self speculate:^{ [self pattern_]; }]) {
         [self pattern_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_DELIMOPEN, 0]) {
+    } else if ([self speculate:^{ [self delimitedString_]; }]) {
         [self delimitedString_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_ANY_TITLE, PEGKIT_TOKEN_KIND_CHAR_TITLE, PEGKIT_TOKEN_KIND_COMMENT_TITLE, PEGKIT_TOKEN_KIND_DIGIT_TITLE, PEGKIT_TOKEN_KIND_EMAIL_TITLE, PEGKIT_TOKEN_KIND_EMPTY_TITLE, PEGKIT_TOKEN_KIND_EOF_TITLE, PEGKIT_TOKEN_KIND_LETTER_TITLE, PEGKIT_TOKEN_KIND_NUMBER_TITLE, PEGKIT_TOKEN_KIND_QUOTEDSTRING_TITLE, PEGKIT_TOKEN_KIND_SPECIFICCHAR_TITLE, PEGKIT_TOKEN_KIND_SYMBOL_TITLE, PEGKIT_TOKEN_KIND_S_TITLE, PEGKIT_TOKEN_KIND_URL_TITLE, PEGKIT_TOKEN_KIND_WORD_TITLE, 0]) {
+    } else if ([self speculate:^{ [self constant_]; }]) {
         [self constant_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'parser'."];
@@ -509,9 +530,9 @@
 
 - (void)pattern_ {
     
-    if ([self predicts:PEGKIT_TOKEN_KIND_PATTERNNOOPTS, 0]) {
+    if ([self speculate:^{ [self patternNoOpts_]; }]) {
         [self patternNoOpts_]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_PATTERNIGNORECASE, 0]) {
+    } else if ([self speculate:^{ [self patternIgnoreCase_]; }]) {
         [self patternIgnoreCase_]; 
     } else {
         [self raise:@"No viable alternative found in rule 'pattern'."];
@@ -556,35 +577,35 @@
 
 - (void)constant_ {
     
-    if ([self predicts:PEGKIT_TOKEN_KIND_EOF_TITLE, 0]) {
+    if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_EOF_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_EOF_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_WORD_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_WORD_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_WORD_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_NUMBER_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_NUMBER_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_NUMBER_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_QUOTEDSTRING_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_QUOTEDSTRING_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_QUOTEDSTRING_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_SYMBOL_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_SYMBOL_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_SYMBOL_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_COMMENT_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_COMMENT_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_COMMENT_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_EMPTY_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_EMPTY_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_EMPTY_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_ANY_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_ANY_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_ANY_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_S_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_S_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_S_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_URL_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_URL_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_URL_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_EMAIL_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_EMAIL_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_EMAIL_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_DIGIT_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_DIGIT_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_DIGIT_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_LETTER_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_LETTER_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_LETTER_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_CHAR_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_CHAR_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_CHAR_TITLE discard:NO]; 
-    } else if ([self predicts:PEGKIT_TOKEN_KIND_SPECIFICCHAR_TITLE, 0]) {
+    } else if ([self speculate:^{ [self match:PEGKIT_TOKEN_KIND_SPECIFICCHAR_TITLE discard:NO]; }]) {
         [self match:PEGKIT_TOKEN_KIND_SPECIFICCHAR_TITLE discard:NO]; 
     } else {
         [self raise:@"No viable alternative found in rule 'constant'."];

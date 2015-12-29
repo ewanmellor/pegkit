@@ -52,6 +52,18 @@
 }
 
 - (void)start {
+    if (!self.isEmptyOK || [self speculate:^{
+            [self startSpeculate];
+        }]) {
+        [self startSpeculate];
+    }
+    else {
+        [self matchEOF:YES];
+        PUSH(PEGKitSuccessfulEmptyParse);
+    }
+}
+
+- (void)startSpeculate {
     [self execute:^{
     
     self.sections = [NSMutableDictionary dictionary];
@@ -67,7 +79,16 @@
 
     }];
 
-    [self sections_]; 
+    NSString * methodName = self.startRuleName;
+    if (methodName == nil) {
+        [self sections_];
+    }
+    else {
+        SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+        IMP imp = [self methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(self, selector);
+    }
     [self matchEOF:YES]; 
 
 }

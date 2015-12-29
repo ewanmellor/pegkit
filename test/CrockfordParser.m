@@ -124,9 +124,30 @@
 }
 
 - (void)start {
+    if (!self.isEmptyOK || [self speculate:^{
+            [self startSpeculate];
+        }]) {
+        [self startSpeculate];
+    }
+    else {
+        [self matchEOF:YES];
+        PUSH(PEGKitSuccessfulEmptyParse);
+    }
+}
+
+- (void)startSpeculate {
 
         [self tryAndRecover:TOKEN_KIND_BUILTIN_EOF block:^{
-            [self program_]; 
+            NSString * methodName = self.startRuleName;
+            if (methodName == nil) {
+                [self program_];
+            }
+            else {
+                SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@_", methodName]);
+                IMP imp = [self methodForSelector:selector];
+                void (*func)(id, SEL) = (void *)imp;
+                func(self, selector);
+            }
             [self matchEOF:YES]; 
         } completion:^{
             [self matchEOF:YES];
