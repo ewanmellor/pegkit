@@ -81,6 +81,7 @@ static PKTokenEOF *EOFToken = nil;
 @property (nonatomic, readwrite, copy) id value;
 
 @property (nonatomic, readwrite) NSUInteger lineNumber;
+@property (nonatomic, readwrite) NSUInteger column;
 @end
 
 @implementation PKToken
@@ -105,6 +106,7 @@ static PKTokenEOF *EOFToken = nil;
         self.doubleValue = n;
         self.offset = NSNotFound;
         self.lineNumber = NSNotFound;
+        self.column = NSNotFound;
         
         self.isNumber = (PKTokenTypeNumber == t);
         self.isQuotedString = (PKTokenTypeQuotedString == t);

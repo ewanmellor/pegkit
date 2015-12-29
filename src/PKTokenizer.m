@@ -27,6 +27,7 @@
 
 @interface PKToken ()
 @property (nonatomic, readwrite) NSUInteger lineNumber;
+@property (nonatomic, readwrite) NSUInteger column;
 @end
 
 @interface PKTokenizer ()
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) PKReader *reader;
 @property (nonatomic, retain) NSMutableArray *tokenizerStates;
 @property (nonatomic, readwrite) NSUInteger lineNumber;
+@property (nonatomic, readwrite) NSUInteger lineStartOffset;
 @end
 
 @implementation PKTokenizer
@@ -183,6 +185,7 @@
         if (state) {
             result = [state nextTokenFromReader:_reader startingWith:c tokenizer:self];
             result.lineNumber = _lineNumber;
+            result.column = result.offset - _lineStartOffset;
         } else {
             result = [PKToken EOFToken];
         }
@@ -262,6 +265,7 @@
     }
     _reader.string = _string;
     self.lineNumber = 1;
+    self.lineStartOffset = 0;
 }
 
 
@@ -272,6 +276,7 @@
     }
     _reader.stream = _stream;
     self.lineNumber = 1;
+    self.lineStartOffset = 0;
 }
 
 
