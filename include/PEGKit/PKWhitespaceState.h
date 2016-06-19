@@ -23,6 +23,12 @@
 #import <Foundation/Foundation.h>
 #import <PEGKit/PKTokenizerState.h>
 
+typedef NS_ENUM(NSUInteger, PKWhitespaceStateReportingMode) {
+    PKWhitespaceStateReportingModeNone = 0,
+    PKWhitespaceStateReportingModeAll,
+    PKWhitespaceStateReportingModeOnlyNewlines,
+};
+
 /*!
     @class      PKWhitespaceState
     @brief      A whitespace state ignores whitespace (such as blanks and tabs), and returns the tokenizer's next token.
@@ -47,7 +53,16 @@
 
 /*!
     @property   reportsWhitespaceTokens
-    @brief      determines whether a <tt>PKTokenizer</tt> associated with this state reports or silently consumes whitespace tokens. default is <tt>NO</tt> which causes silent consumption of whitespace chars
+    @brief      Determines whether a <tt>PKTokenizer</tt> associated with this state reports or silently consumes whitespace tokens.
+    @details    Equivalent to <tt>self.reportingMode</tt> being either <tt>PKWhitespaceStateReportingModeNone</tt> or <tt>PKWhitespaceStateReportingModeAll</tt>.
 */
 @property (nonatomic) BOOL reportsWhitespaceTokens;
+
+/*!
+    @property   reportingMode
+    @brief      Determines whether a <tt>PKTokenizer</tt> associated with this state reports or silently consumes whitespace tokens.
+    @details    If equal to <tt>PKWhitespaceStateReportingModeAll</tt> then all whitespace will be reported (in sequences).  If equal to <tt>PKWhitespaceStateReportingModeOnlyNewlines</tt> then individual newlines will be reported immediately (ignoring and discarding any surrounding horizontal whitespace) and all other whitespace will be discarded.  Default is <tt>PKWhitespaceStateReportingModeNone</tt> which causes silent consumption of whitespace chars.
+ */
+@property (nonatomic) PKWhitespaceStateReportingMode reportingMode;
+
 @end

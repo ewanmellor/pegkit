@@ -85,7 +85,7 @@
 
 - (PKToken *)nextTokenFromReader:(PKReader *)r startingWith:(PKUniChar)cin tokenizer:(PKTokenizer *)t {
     NSParameterAssert(r);
-    if (_reportsWhitespaceTokens) {
+    if (self.reportsWhitespaceTokens) {
         [self resetWithReader:r];
     }
     
@@ -94,8 +94,13 @@
         if ('\n' == c) {
             t.lineNumber++;
             t.lineStartOffset = r.offset;
+            if (self.reportingMode == PKWhitespaceStateReportingModeOnlyNewlines) {
+                PKToken *tok = [PKToken tokenWithTokenType:PKTokenTypeWhitespace stringValue:@"\n" doubleValue:0.0];
+                tok.offset = self.offset;
+                return tok;
+            }
         }
-        if (_reportsWhitespaceTokens) {
+        if (self.reportsWhitespaceTokens) {
             [self append:c];
         }
         c = [r read];
@@ -104,13 +109,22 @@
         [r unread];
     }
     
-    if (_reportsWhitespaceTokens) {
+    if (self.reportsWhitespaceTokens) {
         PKToken *tok = [PKToken tokenWithTokenType:PKTokenTypeWhitespace stringValue:[self bufferedString] doubleValue:0.0];
         tok.offset = self.offset;
         return tok;
     } else {
         return [t nextToken];
     }
+}
+
+
+-(BOOL)reportsWhitespaceTokens {
+    return (self.reportingMode == PKWhitespaceStateReportingModeAll);
+}
+
+-(void)setReportsWhitespaceTokens:(BOOL)reportsWhitespaceTokens {
+    self.reportingMode = (reportsWhitespaceTokens ? PKWhitespaceStateReportingModeAll : PKWhitespaceStateReportingModeNone);
 }
 
 @end
