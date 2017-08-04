@@ -167,6 +167,7 @@
     self.litToken = nil;
     self.delimToken = nil;
     self.predicateToken = nil;
+    self.trackToken = nil;
     [super dealloc];
 }
 

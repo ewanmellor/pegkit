@@ -52,6 +52,7 @@
     self.destinationPath = nil;
     self.parserName = nil;
     self.grammar = nil;
+    self.error = nil;
     
     self.textView = nil;
     
@@ -152,6 +153,7 @@
         generator.enableHybridDFA = self.enableHybridDFA;
         generator.enableMemoization = self.enableMemoization;
         [generator generate];
+        [generator release];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [self done];
         });

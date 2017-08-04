@@ -26,7 +26,7 @@
 
 int main(int argc, char *argv[]) {
     @autoreleasepool {
-        PGCLI * cli = [[PGCLI alloc] init];
+        PGCLI * cli = [[[PGCLI alloc] init] autorelease];
         if (cli.willHandleCommandLine) {
             return [cli handleCommandLine];
         }

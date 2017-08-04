@@ -24,6 +24,12 @@
 
 @implementation PGPatternNode
 
+-(void)dealloc {
+    self.string = nil;
+    [super dealloc];
+}
+
+
 - (NSUInteger)type {
     return PGNodeTypePattern;
 }
