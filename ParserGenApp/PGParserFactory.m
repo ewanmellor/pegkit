@@ -365,8 +365,6 @@
     NSAssert([s hasPrefix:@"/"], @"");
     //NSAssert([s hasSuffix:@"/"], @"");
     
-    NSString *optStr = nil;
-    
     NSUInteger len = [s length];
     NSRange r = [s rangeOfString:@"/" options:NSBackwardsSearch];
     NSAssert(r.length, @"");
@@ -374,8 +372,6 @@
     
     if (r.location < len - 1) {
         NSUInteger loc = r.location + 1;
-        r = NSMakeRange(loc, len - loc);
-        optStr = [s substringWithRange:r];
         s = [s substringWithRange:NSMakeRange(0, loc)];
     }
     s = [s stringByTrimmingQuotes];
